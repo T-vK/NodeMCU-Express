@@ -1,4 +1,4 @@
--- Express-like HTTP server Class
+-- Express.js-like HTTP server Class
 express = {
     new = function(tcpServe)
         if not tcpServer then

@@ -49,7 +49,7 @@ end)
 
 ## Full Example
 ``` Lua
-require('express')
+require('HttpServer')
 
 local app = express.new()
 app:listen(80) -- Listen on port 80
@@ -68,4 +68,4 @@ end)
 Of course your ESP8266 needs to be connected to your WiFi or your ESP8266 has to host an AP that you are connecting to.
 
 ## How to use it
-Just upload `express.lua` to your ESP8266, then you can use `require('express') just like in my example in your `init.lua`.
+Just upload `express.lua` to your ESP8266, then you can use `require('HttpServer') just like in my example in your `init.lua`.
