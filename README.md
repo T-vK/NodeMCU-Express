@@ -1,8 +1,8 @@
-# Express-like HTTP server library for NodeMCU
+# Express.js-like HTTP server library for NodeMCU
 
 ## About
 This HTTP server library is very similar to the popular node.js module [express.js](https://expressjs.com/en/starter/hello-world.html).  
-It's extremely intuitive and easy to use, thus I'm trying to make the interface as similar as possible.  
+It's extremely intuitive and easy to use thus and I'm making the interface as similar as possible.  
 The library is written in Lua.
 
 ## Features
