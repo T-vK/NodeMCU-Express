@@ -23,7 +23,7 @@ app:use(function(req,res,next)
 end)
 
 -- create a new route and return a raw http response
-app:get('/home',function(req,res)
+app:get('/home',function(req,res) -- just to clarify: this nasty raw http response stuff won't be necessary in the final version
     local statusCode = 200
     local statusText = 'OK'
     local responseBody = '<html><head></head><body>HELLO WORLD!</body></html>'
