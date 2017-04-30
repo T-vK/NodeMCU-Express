@@ -6,6 +6,9 @@ I'm trying to make the interface as similar as possible.
 For now I'm only going to add functionality for adding routes, middlewares and to serve static files.  
 By creating your own middlewares you can then easily extend the functionality as far as your heart desires.  
 I will create an http header middleware and a body parser middleware as I will definitely need those. 
+For now you have to parse/generate your request/response bodies and headers yourself.
+
+Note: This is a work in progress. The first completely functional version if almost ready.  
 
 # Example
 ``` Lua
@@ -19,7 +22,7 @@ app:use(function(req,res,next)
     next()
 end)
 
--- create a new middleware that prints the url of every request
+-- create a new route and return a raw http response
 app:get('/home',function(req,res)
     local statusCode = 200
     local statusText = 'OK'
