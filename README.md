@@ -1,4 +1,4 @@
-# Awesome HTTP server library for ESP8266 modules that run the NodeMCU firmware
+# HTTP server library for ESP8266 modules that run the NodeMCU firmware
 
 ## About
 This HTTP server library is very similar to the popular node.js express module.  
@@ -10,7 +10,7 @@ For now you have to parse/generate your request/response bodies and headers your
 
 Note: This is a work in progress. The first completely functional version if almost ready.  
 
-# Example
+## Example
 ``` Lua
 require('express')
 local app = express()
@@ -33,3 +33,6 @@ app:get('/home',function(req,res) -- just to clarify: this nasty raw http respon
     res:send(response)
 end)
 ```
+
+## How to use it
+Just upload `express.lua` to your EXP8266 then you can use `require('express') just like in my example in your `init.lua`.
