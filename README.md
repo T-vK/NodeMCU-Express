@@ -1,38 +1,71 @@
-# HTTP server library for ESP8266 modules that run the NodeMCU firmware
+# Express-like HTTP server library for NodeMCU
 
 ## About
-This HTTP server library is very similar to the popular node.js express module.  
-I'm trying to make the interface as similar as possible.  
-For now I'm only going to add functionality for adding routes, middlewares and to serve static files.  
-By creating your own middlewares you can then easily extend the functionality as far as your heart desires.  
-I will create an http header middleware and a body parser middleware as I will definitely need those. 
-For now you have to parse/generate your request/response bodies and headers yourself.
+This HTTP server library is very similar to the popular node.js module [express.js](https://expressjs.com/en/starter/hello-world.html).  
+It's extremely intuitive and easy to use, thus I'm trying to make the interface as similar as possible.  
+The library is written in Lua.
 
-Note: This is a work in progress. The first completely functional version if almost ready.  
+## Features
+- Routing system
+- Middleware system
+- Built-in middlewares for
+    - Response body parsing
+    - Json parsing
+    - Request line parsing
+    - Status line parsing
+    - Response header parsing
 
-## Example
+## Coming soon
+- Static file serving mechanism
+- Middlewares for:
+    - Request header parsing
+    - Request body parsing
+    - Json request body parser
+
+## Routes
+A route consists of a URL path and a function. Whenever someone visits the URL path, the function gets called.  
+For instance:  
 ``` Lua
-require('express')
-local app = express()
-app:listen(80) -- listen on port 80
+-- Create a new route at `/led-on` an the connected function turns an LED on
+app:get('/led-on',function(req,res)
+    gpio.write(4, gpio.HIGH) -- set GPIO 2 to HIGH
+    res:send('Led turned on!')
+end)
+```
+We always start our path with `/`. If your ESP8266 has the IP 192.168.1.111 then you can open the route `/led-on` by typing `http://192.168.1.111/led-on` into your browser.
 
--- create a new middleware that prints the url of every request
+## Middlewares
+A middleware consists of a function that gets called every time someone make an http request to our ESP8266 module.  
+Using a middleware we can easily extend the functionality of our http server.  
+For instance to add a cookie parser, a request logger, an authentication mechanism and muuuuuch more.  
+Here is an example for a request logger:  
+``` Lua
 app:use(function(req,res,next) 
-    print(url)
+    print('New request!' .. ' Method: ' .. req.method .. ' URL: ' .. req.url)
     next()
 end)
 
--- create a new route and return a raw http response
-app:get('/home',function(req,res) -- just to clarify: this nasty raw http response stuff won't be necessary in the final version
-    local statusCode = 200
-    local statusText = 'OK'
-    local responseBody = '<html><head></head><body>HELLO WORLD!</body></html>'
-    local contentLength = responseBody:len()
-    local responseHeader = "HTTP/1.1 " .. statusCode .. " " .. statusText .. "\r\nContent-Length: " .. contentLength .. "\r\nContent-Type: text/html"
-    local response = responseHeader .. "\r\n\r\n" .. responseBody
-    res:send(response)
-end)
 ```
 
+## Full Example
+``` Lua
+require('express')
+
+local app = express.new()
+app:listen(80) -- Listen on port 80
+
+-- Create a new middleware that prints the url of every request
+app:use(function(req,res,next) 
+    print(req.url)
+    next()
+end)
+
+-- Create a new route that just returns an html site that says "HELLO WORLD!"
+app:get('/helloworld',function(req,res)
+    res:send('<html><head></head><body>HELLO WORLD!</body></html>')
+end)
+```
+Of course your ESP8266 needs to be connected to your WiFi or your ESP8266 has to host an AP that you are connecting to.
+
 ## How to use it
-Just upload `express.lua` to your EXP8266 then you can use `require('express') just like in my example in your `init.lua`.
+Just upload `express.lua` to your ESP8266, then you can use `require('express') just like in my example in your `init.lua`.
