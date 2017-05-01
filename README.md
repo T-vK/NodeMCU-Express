@@ -22,6 +22,7 @@ The library is written in Lua.
     - Request body parsing
     - Json request body parser
 - Chunked file transfer (to avoid out-of-memory issues with larger files)
+- Automatic 404 error response for undefined routes
 
 ## Serving files
 Serving files is really easy and can be done with a single line of code.
