@@ -60,12 +60,15 @@ end)
 
 ```
 
-## Full Example
+## Example
+For a full example go here: [example.lua](example.lua)
+
+Here is the short version:
 ``` Lua
 require('HttpServer')
 
 local app = express.new()
-app:listen(80) -- Listen on port 80
+app:listen()
 
 -- Create a new middleware that prints the url of every request
 app:use(function(req,res,next) 
@@ -77,6 +80,13 @@ end)
 app:get('/helloworld',function(req,res)
     res:send('<html><head></head><body>HELLO WORLD!</body></html>')
 end)
+
+-- Serve the file `init.lua` when visiting `/init.lua`
+app:use('/home',express.static('home.html'))
+
+-- Serve all files that are in the folder `http` at url `/libs/...`
+-- (To be more accurate I'm talking about all files starting with `http/`.)
+app:use('/libs',express.static('http'))
 ```
 Of course your ESP8266 needs to be connected to your WiFi or your ESP8266 has to host an AP that you are connecting to.
 
