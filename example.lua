@@ -74,23 +74,21 @@ wifi.sta.eventMonStart()
 ---------------------------------------HTTP server-----------------------------------------
 -------------------------------------------------------------------------------------------
 
-gpio.mode(START_BUTTON, gpio.INT, gpio.PULLUP)
-
 local app = express.new()
 app:listen(80)
 
--- Create a new middleware that prints the url of every request
+-- Register a new middleware that prints the url of every request
 app:use(function(req,res,next) 
     print(req.url)
     next()
 end)
 
--- Create a new route that just returns an html site that says "HELLO WORLD!"
+-- Register a new route that just returns an html site that says "HELLO WORLD!"
 app:get('/helloworld',function(req,res)
     res:send('<html><head></head><body>HELLO WORLD!</body></html>')
 end)
 
--- Serve the file `init.lua` when visiting `/init.lua`
+-- Serve the file `home.html` when visiting `/home`
 app:use('/home',express.static('home.html'))
 
 -- Serve all files that are in the folder `http` at url `/libs/...`
