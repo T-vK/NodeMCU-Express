@@ -1,5 +1,4 @@
-require('HttpServer')
-
+local express = require('libs/HttpServer/HttpServer')
 -- If you want to connect to the ESP's own WiFi AP:
 local ESP_WIFI_NETWORK_NAME = 'HttpServerTest'
 local ESP_WIFI_NETWORK_PASSWORD = 'test12345' -- at least 8 characters
@@ -73,28 +72,26 @@ wifi.sta.eventMonStart()
 -------------------------------------------------------------------------------------------
 ---------------------------------------HTTP server-----------------------------------------
 -------------------------------------------------------------------------------------------
-
-gpio.mode(START_BUTTON, gpio.INT, gpio.PULLUP)
-
-local app = express.new()
+local app = express()
 app:listen(80)
 
--- Create a new middleware that prints the url of every request
+-- Register a new middleware that prints the url of every request
 app:use(function(req,res,next) 
     print(req.url)
     next()
 end)
 
--- Create a new route that just returns an html site that says "HELLO WORLD!"
-app:get('/helloworld',function(req,res)
-    res:send('<html><head></head><body>HELLO WORLD!</body></html>')
-end)
+-- Register a new route that just returns an html site that says "HELLO WORLD!"
+--app:get('/helloworld',function(req,res)
+--    res:send('<html><head></head><body>HELLO WORLD!</body></html>')
+--end)
 
--- Serve the file `init.lua` when visiting `/init.lua`
-app:use('/home',express.static('home.html'))
+-- Serve the file `home.html` when visiting `/home`
+--app:use('/home',express.static('home.html'))
 
 -- Serve all files that are in the folder `http` at url `/libs/...`
 -- (To be more accurate I'm talking about all files starting with `http/`.)
-app:use('/libs',express.static('http'))
+--app:use('/libs',express.static('http'))
 
 -------------------------------------------------------------------------------------------
+
