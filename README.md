@@ -5,24 +5,8 @@ This HTTP server library is very similar to the popular node.js module [express.
 It's extremely intuitive and easy to use thus and I'm making the interface as similar as possible.  
 The library is written in Lua.
 
-## Features
-- Serving files
-- Routing system
-- Middleware system
-- Built-in middlewares for
-    - Response body parsing
-    - Json parsing
-    - Request line parsing
-    - Status line parsing
-    - Response header parsing
-
-## Coming soon
-- Middlewares for:
-    - Request header parsing
-    - Request body parsing
-    - Json request body parser
-- Chunked file transfer (to avoid out-of-memory issues with larger files)
-- Automatic 404 error response for undefined routes
+## Features (current and upcoming)
+[Go to the project site.](https://github.com/T-vK/NodeMCU-Express/projects/1)
 
 ## Serving files
 Serving files is really easy and can be done with a single line of code.
@@ -71,18 +55,18 @@ require('HttpServer')
 local app = express.new()
 app:listen()
 
--- Create a new middleware that prints the url of every request
+-- Define a new middleware that prints the url of every request
 app:use(function(req,res,next) 
     print(req.url)
     next()
 end)
 
--- Create a new route that just returns an html site that says "HELLO WORLD!"
+-- Define a new route that just returns an html site that says "HELLO WORLD!"
 app:get('/helloworld',function(req,res)
     res:send('<html><head></head><body>HELLO WORLD!</body></html>')
 end)
 
--- Serve the file `init.lua` when visiting `/init.lua`
+-- Serve the file `home.html` when visiting `/home`
 app:use('/home',express.static('home.html'))
 
 -- Serve all files that are in the folder `http` at url `/libs/...`
@@ -92,7 +76,7 @@ app:use('/libs',express.static('http'))
 Of course your ESP8266 needs to be connected to your WiFi or your ESP8266 has to host an AP that you are connecting to.
 
 ## How to use it
-Just upload `express.lua` to your ESP8266, then you can use `require('HttpServer') just like in my example in your `init.lua`.
+Just upload `HttpServer.lua` to your ESP8266, then you can use `require('HttpServer') just like in my example in your `init.lua`.
 
 ## Need help? Have a feature request? Found a bug?
 Create an issue right here on github.
