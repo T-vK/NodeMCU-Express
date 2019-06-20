@@ -152,7 +152,7 @@ express = {
             end
             -- Allow removing headers
             res.removeHeader = function(this,key)
-                this.headers[key] = nil
+                this._headers[key] = nil
                 return this
             end
             -- Allow setting response code
@@ -161,7 +161,7 @@ express = {
                 this.statusText = res.app.statusCodes[code]
                 return this
             end
-            -- Allow sending body (string or if supported table which get converted to json)i
+            -- Allow sending body (string or supported table which gets converted to json)
             res.send = function(this,body)
                 if type(body) == 'table' then
                     body = cjson.encode(body)
@@ -181,6 +181,8 @@ express = {
                 rawResponse = rawResponse .. '\r\n' .. body
                 
                 this:sendRaw(rawResponse)
+                
+                this._headers = defaultHeaders --reset the _headers table after sending the response
             end
             -- Dedicated function for json body
             res.json = function(this,table)
